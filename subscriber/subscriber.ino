@@ -41,6 +41,8 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
 
+  handdle_qmtt();
+
 }
 
 
@@ -76,6 +78,9 @@ void init_mqtt(){
   Serial.println(mqtt_port);
 
   mqtt_client.setServer(broker_ip, mqtt_port);
+
+  mqtt_client.setCallback(OnMqttReceiver);
+
 }
 
 void connect_mqtt(){
