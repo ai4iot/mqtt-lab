@@ -12,15 +12,17 @@ WiFiClient esp_client;
 
 PubSubClient mqtt_client(esp_client);
 
+
 void setup_wifi();
 void init_mqtt();
 void connect_mqtt();
 void handdle_qmtt();
-void mqtt_publish(String topic, char * payload);
-
+boolean mqtt_subscribe(String topic);
+void OnMqttReceiver(char * topic, byte * payload, unsigned int length);
 
 void setup() {
   // put your setup code here, to run once:
+
 
   Serial.begin(115200);
 
@@ -34,7 +36,6 @@ void setup() {
   Serial.println("\n Ok");
 
 
-
 }
 
 void loop() {
@@ -42,12 +43,28 @@ void loop() {
 
 }
 
-void mqtt_publish(String topic, char * payload){
+
+void OnMqttReceiver(char * topic, byte * payload, unsigned int length){
 
 
-  mqtt_client.publish(topic.c_str(), payload);
+  Serial.print("Received on ");
+  Serial.print(topic);
+  Serial.print(": ");
+
+  String content = "";
+  for (size_t i = 0; i < length; i++){
+        content.concat((char)payload[i]);
+  }
+  Serial.print(content);
+  Serial.println();
 
 
+}
+
+
+boolean mqtt_subscribe(String topic){
+
+  return mqtt_client.subscribe(topic.c_str());
 
 }
 
