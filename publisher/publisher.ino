@@ -1,6 +1,16 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+#define TRIG_PIN 5
+#define ECHO_PIN 18
+
+#define SOUND_SPEED 340
+#define TRIG_PULSE_DURATION_US 10
+
+long ultrasonic_duration;
+float distance_cm;
+
+
 const char * ssid = "ASUS_GRAM";
 const char * password = "GramLab0rat0ri0";
 
@@ -18,6 +28,8 @@ void connect_mqtt();
 void handdle_qmtt();
 void mqtt_publish(String topic, char * payload);
 
+float get_distance();
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,6 +43,10 @@ void setup() {
   connect_mqtt();
   
 
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+
   Serial.println("\n Ok");
 
 
@@ -39,6 +55,28 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+
+  distance_cm = get_distance();
+
+}
+
+
+
+float get_distance(){
+
+
+  digititalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(TRIG_PULSE_DURATION_US);
+  digitalWrite(TRIG_PIN, LOW);
+
+  ultrasonic_duration = pulseIn(ECHO_PIN, HIGH);
+
+  return ultrasonic_duration * SOUND_SPEED/2*0.0001;
+
+
 
 }
 
@@ -76,8 +114,6 @@ void connect_mqtt(){
            delay(500);
        }
   }
-
-
 }
 
 void handdle_qmtt(){
