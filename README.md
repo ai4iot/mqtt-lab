@@ -16,3 +16,4 @@ The second ESP32 acts as a receiver, receiving MQTT messages and controlling a R
 - Cables
 - Bread borad
 
+
