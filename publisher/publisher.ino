@@ -65,7 +65,7 @@ void loop() {
 float get_distance(){
 
 
-  digititalWrite(TRIG_PIN, LOW);
+  digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
 
   digitalWrite(TRIG_PIN, HIGH);
