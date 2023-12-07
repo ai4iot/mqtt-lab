@@ -1,15 +1,15 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-#define TRIG_PIN 5
-#define ECHO_PIN 18
+#define TRIG_PIN 11
+#define ECHO_PIN 12
 
 #define SOUND_SPEED 340
 #define TRIG_PULSE_DURATION_US 10
 
 long ultrasonic_duration;
 float distance_cm;
-
+char buffer[20];
 
 const char * ssid = "ASUS_GRAM";
 const char * password = "GramLab0rat0ri0";
@@ -55,8 +55,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-
+  handdle_qmtt();
   distance_cm = get_distance();
+  sprintf(buffer, "%.2f", distance_cm);
+  Serial.println(distance_cm);
+  mqtt_publish("esp32/distance", buffer);
+  delay(300);
 
 }
 
