@@ -26,7 +26,7 @@ visual indicator.
 We need to install the Mosquitto MQTT Broker in a computer. The installation instructions can be found 
 [here](https://mosquitto.org/download/).  
 We also made a docker image with the Mosquitto MQTT Broker installed and configured. 
-The docker image can be found [mosquitto-docker](dokcer).
+The docker image can be found [mosquitto-docker](docker).
 
 ## Arduino IDE 2.0
 
