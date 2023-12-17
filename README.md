@@ -162,3 +162,91 @@ void updateLedColor(int distance)
 }
 ```
 
+### Libraries for the Subscriber
+
+We need to install the following libraries form the Arduino IDE Library Manager:
+
+- PubSubClient
+- WiFi
+
+Then we can download the code from the [subscriber](subscriber) folder.
+
+### Code explanation
+
+The code is divided in 3 main parts: WiFi connection, MQTT connection and RGB-Led control.
+
+#### WiFi connection
+
+In this part we connect to the WiFi network. We need to change the ssid and password to match our network.
+```c
+const char* ssid = "****";
+const char* password = "****";
+```
+
+#### MQTT connection
+
+In this part we connect to the MQTT broker. We need to change the broker address and port to match our broker.
+```c
+const char* mqtt_server = "";
+const int mqtt_port = 1883;
+``` 
+We also have the OnMqttReceiver function, which is called whenever a MQTT message is received.
+```c
+void OnMqttReceiver(char * topic, byte * payload, unsigned int length){
+  Serial.print("Received on ");
+  Serial.print(topic);
+  Serial.print(": ");
+
+  String content = "";
+  for (size_t i = 0; i < length; i++){
+        content.concat((char)payload[i]);
+  }
+  Serial.print(content);
+  Serial.println();
+}
+```
+
+#### RGB-Led control
+
+In this part we control the RGB-Led based on the distance received from the publisher.
+The code below shows how we control the RGB-Led.
+```c    
+void set_led_color(float distance){
+  if(distance < 10){
+    analogWrite(RED_PIN, 0);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 255);
+  }else if(distance < 20){
+    analogWrite(RED_PIN, 0);
+    analogWrite(GREEN_PIN, 255);
+    analogWrite(BLUE_PIN, 0);
+  }else if(distance < 30){
+    analogWrite(RED_PIN, 255);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 0);
+  }else{
+    analogWrite(RED_PIN, 0);
+    analogWrite(GREEN_PIN, 0);
+    analogWrite(BLUE_PIN, 0);
+  }
+}
+```
+
+## Running the project
+
+To run the project we need to start the [Mosquitto MQTT Broker](#mosquitto-mqtt-broker-installation) 
+and upload the code to the ESP32s.
+
+## Troubleshooting
+
+If you have any problems, feel free to contact us or open an issue in this repository.
+
+- Make sure the broker address and port are correct and that the broker is running.
+- Make sure the WiFi ssid and password are correct.
+- Make sure the ESP32s are connected to the same network as the broker.
+- Make sure the ESP32s are connected to the correct pins.
+- If you are using Linux make sure the user has permission to use the serial port. → [How to](https://askubuntu.com/questions/58119/changing-permissions-on-serial-port).
+
+
+
+
