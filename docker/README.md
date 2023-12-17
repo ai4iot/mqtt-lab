@@ -32,10 +32,10 @@ cd ~/mqtt
 mkdir config data log
 ```
 
-Now we can download the [docker-compose.yml](docker/docker-compose.yml) file
+Now we can download the [docker-compose.yml](docker-compose.yaml) file
 and copy it to the `~/mqtt` directory.
 
-Then we enter into the `~/mqtt/config` directory and download the mosquitto.con file
+Then we enter into the `~/mqtt/config` directory and download the [mosquitto.conf](mosquitto.conf) file
 and copy there. This file contains the configuration of the MQTT broker, such
 as the port where it will be listening, the location of the data and log
 directories and allows anonymous connections.
@@ -47,7 +47,13 @@ docker-compose up -d
 ```
 
 This will download the mosquitto image and run it. The MQTT broker will be
-listening on port 1883.
+listening on port 1883. To check that the MQTT broker is running, we can run
+the following command:
+
+```bash
+docker-compose ps
+```
+
 
 
 
