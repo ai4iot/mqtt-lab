@@ -11,11 +11,11 @@ long ultrasonic_duration;
 float distance_cm;
 char buffer[20];
 
-const char * ssid = "ASUS_GRAM";
-const char * password = "GramLab0rat0ri0";
+const char * ssid = "******";
+const char * password = "******";
 
 
-const char * broker_ip = "192.168.77.106";
+const char * broker_ip = "******";
 const uint16_t mqtt_port = 1883;
 
 WiFiClient esp_client;

@@ -18,16 +18,22 @@ visual indicator.
 - HC-SR04 ultrasonic sensor
 - RGB-Led
 - Cables
-- Bread borad
+- Bread board
+- Resistors (220 Ohm)
 
 ## Mosquitto MQTT Broker installation
 
 We need to install the Mosquitto MQTT Broker in a computer. The installation instructions can be found 
 [here](https://mosquitto.org/download/).  
 We also made a docker image with the Mosquitto MQTT Broker installed and configured. 
-The docker image can be found [mosquitto-docker](dokcer/mosquitto-docker).
+The docker image can be found [mosquitto-docker](dokcer).
 
+## Arduino IDE 2.0
 
+We need to install the Arduino IDE to program the ESP32 boards.
+The installation instructions can be found [here](https://www.arduino.cc/en/Guide/HomePage).  
+We also need to install the ESP32 board in the Arduino IDE. The installation instructions can be found
+[here](https://randomnerdtutorials.com/installing-esp32-arduino-ide-2-0/)
 
 ## Publisher ESP32
 
@@ -63,7 +69,7 @@ const char* password = "****";
 
 In this part we connect to the MQTT broker. We need to change the broker address and port to match our broker.
 ```c
-const char* mqtt_server = "";
+const char* broker_ip = "";
 const int mqtt_port = 1883;
 ```
 
@@ -98,6 +104,61 @@ and 17, respectively. The GND pin is connected to the ESP32 GND pin.
   
 The connection diagram is shown below:
 
-![ESP32 Subscriber connection](figures/Esp32Subscriber.png)
+![ESP32 Subscriber connection](figures/ESP32RGB.png)
 
+### Libraries for the Subscriber
+
+We need to install the following libraries from the Arduino IDE Library Manager:
+
+- PubSubClient
+- WiFi
+
+Then we can download the code from the [subscriber](subscriber) folder.
+
+### Code explanation
+
+The code is divided in 3 main parts: WiFi connection, MQTT connection and RGB-Led control.
+
+#### WiFi connection
+
+In this part we connect to the WiFi network. We need to change the ssid and password to match our network.
+```c
+const char* ssid = "****";
+const char* password = "****";
+```
+#### MQTT connection
+
+In this part we connect to the MQTT broker. We need to change the broker address and port to match our broker.
+```c
+const char* broker_ip = "";
+const int mqtt_port = 1883;
+```
+
+#### RGB-Led control
+
+In this part we control the RGB-Led based on the distance received from the publisher. The code below shows
+how we control the RGB-Led.
+```c
+void updateLedColor(int distance)
+{
+  if (distance < 50)
+  {
+    analogWrite(pinR, 255);
+    analogWrite(pinG, 0);
+    analogWrite(pinB, 0);
+  }
+  else if (distance < 100)
+  {
+    analogWrite(pinR, 0);
+    analogWrite(pinG, 255);
+    analogWrite(pinB, 0);
+  }
+  else
+  {
+    analogWrite(pinR, 0);
+    analogWrite(pinG, 0);
+    analogWrite(pinB, 255);
+  }
+}
+```
 

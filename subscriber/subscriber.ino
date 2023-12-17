@@ -1,15 +1,18 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-const char * ssid = "ASUS_GRAM";
-const char * password = "GramLab0rat0ri0";
+const char * ssid = "******";
+const char * password = "******";
 
 
-const char * broker_ip = "192.168.77.106";
+const char * broker_ip = "******";
 const uint16_t mqtt_port = 1883;
 
-WiFiClient esp_client;
+const int pinR = 15;
+const int pinG = 16;
+const int pinB = 17;
 
+WiFiClient esp_client;
 PubSubClient mqtt_client(esp_client);
 
 
@@ -19,6 +22,7 @@ void connect_mqtt();
 void handdle_qmtt();
 boolean mqtt_subscribe(String topic);
 void OnMqttReceiver(char * topic, byte * payload, unsigned int length);
+void updateLedColor(int distance);
 
 void setup() {
   // put your setup code here, to run once:
@@ -31,7 +35,7 @@ void setup() {
   init_mqtt();
 
   connect_mqtt();
-  
+
 
   Serial.println("\n Ok");
 
@@ -59,7 +63,8 @@ void OnMqttReceiver(char * topic, byte * payload, unsigned int length){
   }
   Serial.print(content);
   Serial.println();
-
+  int distance = content.toInt();
+  updateLedColor(distance);
 
 }
 
@@ -126,4 +131,26 @@ void setup_wifi(){
 
   Serial.println("Connected to WiFi");
 
+}
+
+void updateLedColor(int distance)
+{
+  if (distance < 50)
+  {
+    analogWrite(pinR, 255);
+    analogWrite(pinG, 0);
+    analogWrite(pinB, 0);
+  }
+  else if (distance < 100)
+  {
+    analogWrite(pinR, 0);
+    analogWrite(pinG, 255);
+    analogWrite(pinB, 0);
+  }
+  else
+  {
+    analogWrite(pinR, 0);
+    analogWrite(pinG, 0);
+    analogWrite(pinB, 255);
+  }
 }
