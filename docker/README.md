@@ -43,7 +43,7 @@ directories and allows anonymous connections.
 Finally, we enter into the `~/mqtt` directory and run the following command:
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 This will download the mosquitto image and run it. The MQTT broker will be
@@ -51,7 +51,7 @@ listening on port 1883. To check that the MQTT broker is running, we can run
 the following command:
 
 ```bash
-docker-compose ps
+docker ps
 ```
 
 
