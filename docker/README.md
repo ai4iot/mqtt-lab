@@ -15,32 +15,8 @@ instructions [here](https://docs.docker.com/compose/install/).
 
 ## Steps
 
-
-
-We need to create some directories to store the configuration and data of the
-MQTT broker. Choose a directory where you want to store the configuration and
-data of the MQTT broker. In this example, we will use the directory
-`~/mqtt`.
-
-```bash
-mkdir ~/mqtt
-```
-Then we need to create 3 subdirectories inside `~/mqtt`:
-
-```bash
-cd ~/mqtt
-mkdir config data log
-```
-
-Now we can download the [docker-compose.yml](docker-compose.yaml) file
-and copy it to the `~/mqtt` directory.
-
-Then we enter into the `~/mqtt/config` directory and download the [mosquitto.conf](mosquitto.conf) file
-and copy there. This file contains the configuration of the MQTT broker, such
-as the port where it will be listening, the location of the data and log
-directories and allows anonymous connections.
-
-Finally, we enter into the `~/mqtt` directory and run the following command:
+We have to navigate to the [mqtt directory](docker/mqtt) and run the following
+command:
 
 ```bash
 docker compose up -d
