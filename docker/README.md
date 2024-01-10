@@ -15,7 +15,8 @@ instructions [here](https://docs.docker.com/compose/install/).
 
 ## Steps
 
-We have to navigate to the [mqtt directory](mqtt) and run the following
+We have to navigate to the [mqtt directory](mqtt) and delete from each 
+directory the `.gitkeep` file, then run the following
 command:
 
 ```bash
