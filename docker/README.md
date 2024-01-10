@@ -15,7 +15,7 @@ instructions [here](https://docs.docker.com/compose/install/).
 
 ## Steps
 
-We have to navigate to the [mqtt directory](docker/mqtt) and run the following
+We have to navigate to the [mqtt directory](mqtt) and run the following
 command:
 
 ```bash
