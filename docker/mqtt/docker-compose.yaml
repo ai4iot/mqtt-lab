@@ -7,3 +7,5 @@ services:
       - ./config:/mosquitto/config
       - ./data:/mosquitto/data
       - ./log:/mosquitto/log
+    ports:
+      - "1883:1883"
